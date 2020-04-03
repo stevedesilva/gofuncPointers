@@ -1,8 +1,9 @@
 package functask_test
 
 import (
-	f "github.com/stevedesilva/gofuncPointers/functask"
 	"testing"
+
+	f "github.com/stevedesilva/gofuncPointers/functask"
 )
 
 func TestHello(t *testing.T) {

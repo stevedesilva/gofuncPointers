@@ -4,4 +4,3 @@ package functask
 func Hello() string {
 	return "Hello, world."
 }
-
