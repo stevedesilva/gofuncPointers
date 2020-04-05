@@ -11,6 +11,27 @@ import (
 //  Now, it's time to refactor it to funcs.
 //
 //  Create Games.go file
+const data = `
+[
+        {
+                "id": 1,
+                "name": "god of war",
+                "genre": "action adventure",
+                "price": 50
+        },
+        {
+                "id": 2,
+                "name": "x-com 2",
+                "genre": "strategy",
+                "price": 40
+        },
+        {
+                "id": 3,
+                "name": "minecraft",
+                "genre": "sandbox",
+                "price": 20
+        }
+]`
 
 // Item struct
 type Item struct {
@@ -23,6 +44,19 @@ type Item struct {
 type Game struct {
 	Item
 	genre string
+}
+
+// JSONGame struct
+type JSONGame struct {
+	ID    int    `json:"id,omitempty"`
+	Name  string `json:"name,omitempty"`
+	Genre string `json:"genre,omitempty"`
+	Price int    `json:"price,omitempty"`
+}
+
+// NewJSONGame constructor
+func NewJSONGame(gm Game) JSONGame {
+	return JSONGame{ID: gm.id, Name: gm.name, Genre: gm.genre, Price: gm.price}
 }
 
 // NewGame func

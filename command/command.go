@@ -1,63 +1,13 @@
 package command
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
 
 	g "github.com/stevedesilva/gofuncPointers/game"
 )
-
-//     5- Refactor the runCmd() with the cmdXXX funcs.
-//
-//  Go back to main.go and change the existing code with
-//  the new funcs that you've created. There are hints
-//  inside the code.
-//
-// ---------------------------------------------------------
-
-// func main() {
-// 	games := f.Load()
-// 	byID := f.IndexByID(Games)
-
-// 	fmt.Printf("Inanc's Game store has %d Games.\n", len(Games))
-
-// 	in := bufio.NewScanner(os.Stdin)
-// 	for {
-// 		// menu()
-// 		fmt.Printf(`
-//   > list   : lists all the Games
-//   > id N   : queries a Game by id
-//   > quit   : quits
-
-// `)
-
-// 		if !in.Scan() {
-// 			break
-// 		}
-
-// 		// --- runCmd start ---
-// 		continue := runCmd(in.Text(), games, byID)
-// 		// --- runCmd end ---
-// 	}
-// }
-
-// ---------------------------------------------------------
-// EXERCISE: Refactor the Game store to funcs - step #2
-//
-//  Let's continue the refactoring from the previous
-//  exercise. This time, you're going to refactor the
-//  command handling logic.
-//
-//
-//  Create commands.go file
-//
-//     1- Add a func that runs the given command from the user:
-//
-//        Name  : runCmd
-//        Inputs: input string, []Game, map[int]Game
-//        Output: bool
-//
 
 // RunCmd func
 func RunCmd(input string, games []g.Game, byID map[int]g.Game) bool {
@@ -77,10 +27,55 @@ func RunCmd(input string, games []g.Game, byID map[int]g.Game) bool {
 
 	case "id":
 		return CmdByID(cmd, games, byID)
+
+	case "save":
+		return CmdSave(games)
 	}
 
 	return true
 
+}
+
+//
+//  1- Create a new command in
+//
+//     For more information, see: "Encode" exercise from
+//     the structs section.
+//
+//        Name  : cmdSave
+//        Inputs: []game
+//        Output: bool
+
+// type jsonGame struct {
+// 	ID    int    `json:"id,omitempty"`
+// 	Name  string `json:"name,omitempty"`
+// 	Genre string `json:"genre,omitempty"`
+// 	Price int    `json:"price,omitempty"`
+// }
+
+// // NewJsonGame constructor
+// func NewJsonGame(g.Game) *jsonGame {
+// 	return
+// }
+
+// CmdSave func that encodes the
+//     game store data to json and terminates the program.
+//     Lastly, add it to runCmd func.
+func CmdSave(games []g.Game) bool {
+
+	jGames := make([]g.JSONGame, 0, len(games))
+
+	for _, game := range games {
+		jGames = append(jGames, g.NewJSONGame(game))
+	}
+
+	out, err := json.MarshalIndent(jGames, "", "\t")
+	if err != nil {
+		fmt.Println("sorry, can't save:", err)
+		return true
+	}
+	fmt.Println(string(out))
+	return false
 }
 
 //        This func returns true if it wants the program to

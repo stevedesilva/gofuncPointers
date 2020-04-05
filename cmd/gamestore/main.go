@@ -6,18 +6,35 @@ import (
 	"os"
 
 	c "github.com/stevedesilva/gofuncPointers/command"
-	g "github.com/stevedesilva/gofuncPointers/game"
 	f "github.com/stevedesilva/gofuncPointers/functask"
+	g "github.com/stevedesilva/gofuncPointers/game"
 )
 
-//     5- Refactor the runCmd() with the cmdXXX funcs.
+// ---------------------------------------------------------
+// EXERCISE: Refactor the game store to funcs - step #3
 //
-//  Go back to main.go and change the existing code with
-//  the new funcs that you've created. There are hints
-//  inside the code.
+//  Let's continue from the previous exercise. This time,
+//  you're going to add json encoding and decoding using
+//  funcs.
+//
+//  1- Create a new command in a func that encodes the
+//     game store data to json and terminates the program.
+//     Lastly, add it to runCmd func.
+//
+//     For more information, see: "Encode" exercise from
+//     the structs section.
+//
+//        Name  : cmdSave
+//        Inputs: []game
+//        Output: bool
+//
+//  2- Refactor the load() to load the games from the
+//     `data` constant (it's in the games.go as well).
+//
+//     For more information, see: "Decode" exercise from
+//     the structs section.
 //
 // ---------------------------------------------------------
-
 func main() {
 	games := g.Load()
 	byID := g.IndexByID(games)
@@ -26,12 +43,11 @@ func main() {
 
 	in := bufio.NewScanner(os.Stdin)
 	for {
-		// menu()
 		fmt.Printf(`
   > list   : lists all the Games
   > id N   : queries a Game by id
   > quit   : quits
-
+  > save   : exports the data to json and quits
 `)
 
 		if !in.Scan() || !c.RunCmd(in.Text(), games, byID) {
