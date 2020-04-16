@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	s "github.com/inancgumus/prettyslice"
+	// s "github.com/inancgumus/prettyslice"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func arrays() {
 	nums := [...]int{1, 2, 3}
 
 	fmt.Printf("\nOriginal nums : %p - nums %v \n", &nums, nums)
-	s.Show("nums orig >", nums)
+	// s.Show("nums orig >", nums)
 	// whole array will be copied
 	incr(nums)
 	fmt.Printf("\nOriginal nums : %p - nums %v \n", &nums, nums)
@@ -54,7 +54,6 @@ func incrByPtr(nums *[3]int) {
 func slices() {
 	dirs := []string{"up", "down", "left", "right"}
 	fmt.Printf("slices >\t : v %p \t, addr %p\n", dirs, &dirs)
-	s.Show("slices >", dirs)
 	up(dirs)
 	fmt.Printf("slices <\t :  v %p \t, addr %p\n", dirs, &dirs)
 	// s.Show("slices <", dirs)
