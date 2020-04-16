@@ -6,23 +6,25 @@ import (
 	"os"
 	"sort"
 	"strings"
+
+	 par "github.com/stevedesilva/gofuncPointers/parser"
 )
 
 func main() {
-	p := newParser()
+	p := par.newParser()
 
 	// Scan the standard-in line by line
 	in := bufio.NewScanner(os.Stdin)
 	for in.Scan() {
 		p.lines++
 
-		parsed, err := parse(p, in.Text())
+		parsed, err := par.parse(p, in.Text())
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 
-		p = update(p, parsed)
+		p = p.update(p, parsed)
 	}
 
 	// Print the visits per domain
