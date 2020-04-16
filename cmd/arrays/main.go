@@ -106,7 +106,7 @@ func maps() {
 }
 
 func fix(m map[string]int) {
-	s.Show("fix >", m)
+	// s.Show("fix >", m)
 	// map value (like a slice) is already a pointer
 	// local copy of map(stored at different location) will store the same pointer value
 	m["one"] = 1
