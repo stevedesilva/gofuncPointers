@@ -53,49 +53,47 @@ func incrByPtr(nums *[3]int) {
 
 func slices() {
 	dirs := []string{"up", "down", "left", "right"}
-
+	fmt.Printf("slices >\t : v %p \t, addr %p\n", dirs, &dirs)
 	s.Show("slices >", dirs)
 	up(dirs)
-	s.Show("slices <", dirs)
+	fmt.Printf("slices <\t :  v %p \t, addr %p\n", dirs, &dirs)
+	// s.Show("slices <", dirs)
 
 	upPtr(&dirs)
-	s.Show("slices <", dirs)
+	fmt.Printf("slices <\t :  v %p \t, addr %p\n", dirs, &dirs)
+	// s.Show("slices <", dirs)
 	fmt.Println(dirs)
 
 }
 
 func up(list []string) {
 	// slice header(pointing to backing array) will have a local copied :. you can still change the slice values
-	s.Show("up >", list)
+	// s.Show("up >", list)
+	fmt.Printf("up >\t : v %p \t, addr %p\n", list, &list)
 	for i := range list {
 		list[i] = strings.ToUpper(list[i])
 	}
 	list = append(list, "STEVE")
-	s.Show("up append <", list)
+	// s.Show("up append <", list)
+	fmt.Printf("up <\t : v %p \t, addr %p\n", list, &list)
 }
 
-// func upPtr(plist *[]string) {
-// 	// list := *plist
-// 	// s.Show("upPtr >", list)
-
-// 	// for i := range list {
-// 	// 	list[i] = strings.ToUpper(list[i])
-// 	// }
-
-// 	plist = append(plist, "STEVE")
-// 	s.Show("upPtr append <", list)
-// }
-
 func upPtr(list *[]string) {
+	fmt.Printf("upPtr >\t : v %p \t, addr %p\n", list, &list)
 	lv := *list
-	s.Show("upPtr >", *list)
+	fmt.Printf("lv >\t : v %p \t, addr %p\n", lv, &lv)
+	// s.Show("upPtr >", *list)
 
 	for i := range lv {
 		lv[i] = strings.ToUpper(lv[i])
 	}
 
 	*list = append(*list, "STEVE")
-	s.Show("upPtr append <", *list)
+	lv = *list
+	fmt.Printf("lv <\t : v %p \t, addr %p\n", lv, &lv)
+	fmt.Printf("append <\t : v %p \t, addr %p\n", *list, &*list)
+	// s.Show("upPtr append <", *list)
+	fmt.Printf("upPtr <\t : v %p \t, addr %p\n", list, &list)
 }
 
 func maps() {
