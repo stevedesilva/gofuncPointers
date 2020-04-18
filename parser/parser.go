@@ -2,6 +2,7 @@ package parser
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -27,7 +28,8 @@ func NewParser() Parser {
 }
 
 // Parse parses a log line and returns the parsed Result with an error
-func Parse(p Parser, line string) (parsed Result, err error) {
+func Parse(p *Parser, line string) (parsed Result, err error) {
+	p.Lines++
 	fields := strings.Fields(line)
 	if len(fields) != 2 {
 		err = fmt.Errorf("wrong input: %v (line #%d)", fields, p.Lines)
@@ -46,7 +48,7 @@ func Parse(p Parser, line string) (parsed Result, err error) {
 }
 
 // Update updates the Parser for the given parsing Result
-func Update(p Parser, parsed Result) Parser {
+func Update(p *Parser, parsed Result) {
 	domain, visits := parsed.Domain, parsed.Visits
 
 	// Collect the unique domains
@@ -62,6 +64,27 @@ func Update(p Parser, parsed Result) Parser {
 		Domain: domain,
 		Visits: visits + p.Sum[domain].Visits,
 	}
+	// addressable value example
+	//  p.Sum[domain].Visits += visits
+	// _ = &p.Sum[domain]
+	// clone := p.Sum[domain]
+	// _ = &clone
 
-	return p
+}
+
+// Summarise func
+func Summarise(p Parser) {
+	// Print the visits per domain
+	sort.Strings(p.Domains)
+
+	fmt.Printf("%-30s %10s\n", "DOMAIN", "VISITS")
+	fmt.Println(strings.Repeat("-", 45))
+
+	for _, domain := range p.Domains {
+		parsed := p.Sum[domain]
+		fmt.Printf("%-30s %10d\n", domain, parsed.Visits)
+	}
+
+	// Print the total visits for all domains
+	fmt.Printf("\n%-30s %10d\n", "TOTAL", p.Total)
 }
