@@ -50,12 +50,12 @@ func main() {
 	// the func can change the given computer's brand to another brand
 
 	// change sony's brand to hp using the func — print sony's brand
-	change(sony)
+	change(sony,"hp")
 	fmt.Printf("Sony (%v) \n", sony)
 
 	// write a func that returns the value that is pointed by the given *computer
 	// print the returned value
-	fmt.Println(printVal(sony))
+	fmt.Printf("appleVal                  : %+v\n", valueOf(apple))
 
 	// write a new constructor func that returns a pointer to a computer
 	// and call the func 3 times and print the returned values' addresses
@@ -69,10 +69,10 @@ func newFunc(value string) *computer {
 	return &computer{brand: value}
 }
 
-func change(from *computer) {
-	from.brand = "hp"
+func change(from *computer, brand string) {
+	from.brand = brand
 }
 
-func printVal(from *computer) computer {
+func valueOf(from *computer) computer {
 	return *from
 }
