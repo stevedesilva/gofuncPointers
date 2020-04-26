@@ -15,11 +15,20 @@ type computer struct {
 }
 
 func main() {
-	var c *computer
-	change(c, "apple")
-	fmt.Printf("brand: %s\n", c.brand)
+	var c *computer = &computer{}
+    apple := "apple"
+	fmt.Printf("apple: %s (%p)\n", apple,&apple)
+	change(c, apple)
+	fmt.Printf("brand: %s\n", *c.brand)
+	fmt.Printf("apple.brand: %s (%p)\n", c,c.brand)
 }
 
 func change(c *computer, brand string) {
-	(*c.brand) = brand
+	fmt.Printf(">> apple: %s (%p)\n", brand,&brand)
+	fmt.Printf(">>apple.brand: %s (%p)\n", c,c.brand)
+	// auto def c
+	// c.brand is a ptr to a val
+	// point to another value
+	c.brand = &brand
+	fmt.Printf(">>apple.brand: %s (%p)\n", c,c.brand)
 }
